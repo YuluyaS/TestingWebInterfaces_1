@@ -20,10 +20,9 @@ class SendingFormTest {
     private static WebDriver driver;
 
     @BeforeAll
-    public static void setupAll() {
-        WebDriverManager.chromedriver().setup();
-    }
-        ChromeOptions options = new ChromeOptions();
+    public static <ChromeOptions> void setupAll() {
+        WebDriverManager.toString().setup();
+        ChromeOptions options = new <ChromeOptions>
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
@@ -54,7 +53,7 @@ class SendingFormTest {
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.className("alert-success")).getText();
-        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text.trim());
     }
 
     @Test
@@ -65,7 +64,7 @@ class SendingFormTest {
         form.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         form.findElement(By.cssSelector("[data-test-id=submit]")).click();
         String text = driver.findElement(By.className("alert-success")).getText();
-        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text.trim());
     }
 }
 
