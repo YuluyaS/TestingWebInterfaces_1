@@ -1,22 +1,71 @@
 package ru.netology.web;
 
-import com.codeborne.selenide.SelenideElement;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import java.util.List;
 
-class CallbackTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class SendingFormTest {
+    private static Object WebDriverManager;
+    private static WebDriver driver;
+
+    @BeforeAll
+    public static void setupAll() {
+        WebDriverManager.chromedriver().setup();
+    }
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+    }
+
+    @BeforeEach
+    void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        driver.get("http://localhost:9999");
+    }
+
+    @AfterEach
+    void tearDown() {
+        driver.quit();
+        driver = null;
+    }
+
     @Test
-    void shouldTest() {
-        open("http://localhost:9999");
-        SelenideElement form = $("[data-test-id=callback-form]");
-        form.$("[data-test-id=name] input").setValue("Василий");
-        form.$("[data-test-id=phone] input").setValue("+79270000000");
-        form.$("[data-test-id=agreement]").click();
-        form.$("[data-test-id=submit]").click();
-        $(".alert-success").shouldHave(exactText("Ваша заявка успешно отправлена!"));
+    void shouldTestV1() {
+        List<WebElement> elements = driver.findElements(By.className("input__control"));
+        elements.get(0).sendKeys("Юлия");
+        elements.get(1).sendKeys("+79272230350");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.className("alert-success")).getText();
+        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+    }
+
+    @Test
+    void shouldTestV2() {
+        WebElement form = driver.findElement(By.cssSelector("[data-test-id=callback-form]"));
+        form.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Юлия");
+        form.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79272230350");
+        form.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        form.findElement(By.cssSelector("[data-test-id=submit]")).click();
+        String text = driver.findElement(By.className("alert-success")).getText();
+        assertEquals("Ваша заявка успешно отправлена!", text.trim());
     }
 }
 
