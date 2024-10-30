@@ -1,3 +1,4 @@
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -5,17 +6,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 
 import java.util.List;
-
+import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class SendingFormTest {
+    private WebDriver driver;
+}
+
 @BeforeAll
-void setUpAll() {
+static void setUpAll() {
     WebDriverManager.chromedriver().setup();
 }
 
@@ -46,6 +52,5 @@ void shouldSendform() {
     driver.findElement((SearchContext) By.cssSelector("[data-test-id='submit']")).click();
     String text = driver.findElement(By.cssSelector("[data-test-id='callbask-success']").getText().trim();
     assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
-  }
 }
-
+}
