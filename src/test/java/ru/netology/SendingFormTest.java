@@ -54,3 +54,6 @@ void shouldSendform() {
     assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
 }
 }
+
+public void main() {
+}
