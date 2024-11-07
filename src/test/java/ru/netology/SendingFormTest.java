@@ -47,12 +47,20 @@ public class SendingFormTest {
     @Test
     void shouldSendform() {
         By driver = null;
-        List<WebElement> inputs = driver.findElements((SearchContext) cssSelector("input"));
-        inputs.get(0).sendKeys("Юлия");
-        inputs.get(1).sendKeys("+79272230350");
-        driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(1) > span']")).click();
-        driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(2) > span']")).click();
-        String text = driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(3) > label']")).getText().trim();
+        //List<WebElement> inputs = driver.findElements(By.cssSelector("input"));
+
+        //inputs.get(0).sendKeys("Святынина Юлия");
+        driver.findElement((SearchContext) cssSelector("[data-test-id='name']")).sendKeys("Святынина Юлия");
+
+        //inputs.get(1).sendKeys("+79272230350");
+        driver.findElement((SearchContext) cssSelector("[data-test-id='phone']")).sendKeys("+79272230350");
+
+        driver.findElement((SearchContext) cssSelector("[data-test-id='agreement']")).click();
+
+        WebElement form = driver.findElement((SearchContext) cssSelector("form"));
+        form.findElement(By.cssSelector("button_content")).click();
+
+        String text = driver.findElement((SearchContext) cssSelector("[data-test-id='order-success']")).getText().trim();
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
     }
 }
