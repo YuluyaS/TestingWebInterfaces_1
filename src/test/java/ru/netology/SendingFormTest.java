@@ -47,12 +47,12 @@ public class SendingFormTest {
     @Test
     void shouldSendform() {
         By driver = null;
-        List<WebElement> inputs = driver.findElements(cssSelector("input"));
+        List<WebElement> inputs = driver.findElements((SearchContext) cssSelector("input"));
         inputs.get(0).sendKeys("Юлия");
         inputs.get(1).sendKeys("+79272230350");
-        driver.findElement((SearchContext) cssSelector("[data-test-id='argument']")).click();
-        driver.findElement((SearchContext) cssSelector("[data-test-id='submit']")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='callbaсk-success']")).getText().trim();
+        driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(1) > span']")).click();
+        driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(2) > span']")).click();
+        String text = driver.findElement((SearchContext) cssSelector("[data-test-id='#root > div > form > div:nth-child(3) > label']")).getText().trim();
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
     }
 }
