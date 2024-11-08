@@ -34,27 +34,33 @@ public class SendingFormTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
+        driver = new ChromeDriver(options);
         driver.get("http://localhost:9999");
     }
 
     @AfterEach
     void tearDown() {
+        WebDriverManager driver = null;
         driver.quit();
-        driver = null;
     }
 
     @Test
     void shouldSendform() {
-        List<WebElement> inputs = driver.findElements(By.cssSelector("input"));
+
+        List<WebElement> inputs = driver.findElements(cssSelector("input"));
 
         inputs.get(0).sendKeys("Святынина Юлия");
         inputs.get(1).sendKeys("+79272230350");
-        driver.findElement(By.cssSelector("data-test-id='agreement'")).click();
+        driver.findElement(cssSelector("data-test-id='agreement'")).click();
 
-        WebElement form = driver.findElement(By.cssSelector("form"));
-        form.findElement(By.cssSelector("button_content")).click();
+        WebElement form = driver.findElement(cssSelector("form"));
+        form.findElement(cssSelector("button_content")).click();
 
-        String text = driver.findElement(By.cssSelector("[data-test-id='order-success']")).getText().trim();
+        String text = driver.findElement(cssSelector("[data-test-id='order-success']")).getText().trim();
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
+
     }
 }
+
+
+
