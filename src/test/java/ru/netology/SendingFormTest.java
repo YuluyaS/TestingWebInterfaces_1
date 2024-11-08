@@ -40,8 +40,9 @@ public class SendingFormTest {
 
     @AfterEach
     void tearDown() {
-        WebDriverManager driver = null;
+
         driver.quit();
+        driver = null;
     }
 
     @Test
@@ -51,14 +52,12 @@ public class SendingFormTest {
 
         inputs.get(0).sendKeys("Святынина Юлия");
         inputs.get(1).sendKeys("+79272230350");
-        driver.findElement(cssSelector("data-test-id='agreement'")).click();
 
-        WebElement form = driver.findElement(cssSelector("form"));
-        form.findElement(cssSelector("button_content")).click();
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.className("button")).click();
 
-        String text = driver.findElement(cssSelector("[data-test-id='order-success']")).getText().trim();
-        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с Вами в ближайшее время.", text);
-
+        String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text);
     }
 }
 
