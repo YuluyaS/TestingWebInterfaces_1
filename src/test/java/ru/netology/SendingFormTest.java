@@ -34,7 +34,6 @@ public class SendingFormTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        ChromeDriver driver = new ChromeDriver(options);
         driver.get("http://localhost:9999");
     }
 
@@ -46,7 +45,7 @@ public class SendingFormTest {
 
     @Test
     void shouldSendform() {
-        List<WebElement> inputs = driver.findElements(By.cssSelector(".input"));
+        List<WebElement> inputs = driver.findElements(By.cssSelector("input"));
 
         inputs.get(0).sendKeys("Святынина Юлия");
         inputs.get(1).sendKeys("+79272230350");
